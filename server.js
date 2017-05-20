@@ -23,7 +23,9 @@ server.connection({
 
 // Create server routes for the 
 // GET /instructors and GET /instructor/{slug} endpoints
+server.route(require('./api/instructors/routes/get_instructors.js'));
 
+server.route(require('./api/instructors/routes/get_instructor.js'));
 // Starting the server is as simple as calling
 // server.start. We can throw an error if something
 // goes wrong
