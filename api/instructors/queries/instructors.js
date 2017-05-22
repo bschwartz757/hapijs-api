@@ -1,5 +1,6 @@
 'use strict';
 
+const Boom = require('boom');
 const Wreck = require('wreck');
 let instructorsData = require('../../../data/instructors');
 
@@ -13,9 +14,7 @@ const verifyUniqueInstructor = (request, reply) => {
     instructor => instructor.name === name
   );
   if (existingInstructor) {
-    return reply({
-      message: 'Instructor exists'
-    });
+    return reply(Boom.badRequest('Instructor already exists'));
   }
   return reply();
 };
@@ -38,6 +37,10 @@ const getGithubImage = (request, reply) => {
   const githubUser = instructorsData.find(
     instructor => instructor.slug === slug
   ).github;
+
+  if (!githubUser) {
+    return reply();
+  }
   const options = {
     headers: {
       'User-Agent': 'fem-instructors-api'
@@ -48,6 +51,9 @@ const getGithubImage = (request, reply) => {
     `https://api.github.com/users/${githubUser}`,
     options,
     (error, response, payload) => {
+      if (error) {
+        return reply(Boom.badRequest('Error getting user image'));
+      }
       reply(payload.avatar_url);
     }
   );
