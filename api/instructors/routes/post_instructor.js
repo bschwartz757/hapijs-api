@@ -8,6 +8,9 @@ module.exports = {
   method: 'POST',
   path: '/api/instructors',
   config: {
+    validate: {
+      payload: payloadValidator
+    },
     pre: [
       { method: query.verifyUniqueInstructor },
       { method: query.createInstructorSlug, assign: 'slug' }

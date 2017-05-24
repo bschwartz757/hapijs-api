@@ -9,6 +9,9 @@ module.exports = {
   method: 'GET',
   path: '/api/instructors',
   config: {
+    validate: {
+      query: queryValidator
+    },
     handler: (request, reply) => {
 
       // If there's no data to be found, throw back a 404

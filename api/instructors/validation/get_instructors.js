@@ -6,7 +6,8 @@ const Joi = require('joi');
 // are 'asc' and 'desc' and for sortKey are 'id',
 // 'name', and 'slug
 const queryValidator = Joi.object({
-  
+    sortDirection: Joi.string().valid(['asc', 'desc']),
+    sortKey: Joi.string().valid(['id', 'slug'])
 });
 
 module.exports = { queryValidator };

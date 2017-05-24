@@ -9,6 +9,9 @@ module.exports = {
   method: 'GET',
   path: '/api/instructors/{slug}',
   config: {
+    validate: {
+      params: paramsValidator
+    },
     pre: [{ method: query.getGithubImage, assign: 'image' }],
     handler: (request, reply) => {
       let instructor = instructorsData.find(
